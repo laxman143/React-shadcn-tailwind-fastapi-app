@@ -5,7 +5,6 @@ import Register from '@/pages/Register'
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
-import ErrorBoundary from '@/components/common/ErrorBoundary'
 import ProductAddEdit from '@/pages/products/ProductAddEdit'
 import Layout from '@/components/common/Layout'
 

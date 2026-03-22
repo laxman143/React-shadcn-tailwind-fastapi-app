@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import api from '@/services/api';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from "sonner"
 
