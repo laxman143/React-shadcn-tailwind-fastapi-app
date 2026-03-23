@@ -1,22 +1,30 @@
 import api from '@/services/api';
-import  { useEffect, useState } from 'react'
-import { Table, TableBody ,TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { useCallback, useEffect, useState } from 'react'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button';
 import { Pencil, Trash } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner"
 
 function Products() {
-
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
-
     const handleEdit = (item: any) => {
-       navigate(`/productAddEdit/${item.id}`)
+        navigate(`/productAddEdit/${item.id}`)
     }
+    // const handleDelete = async (id: number) => {
+    //     console.log("id", id)
+    //     try {
+    //         await api.delete(`/product/${id}`);
+    //         toast.success("Product deleted successfully")
+    //         fetchProducts();
+    //     } catch (error) {
+    //         toast.error("Delete to failed product")
+    //     }
 
-    const handleDelete = async (id: number) => {
-        console.log("id", id)
+
+    // }
+    const handleDelete = useCallback(async (id: any) => {
         try {
             await api.delete(`/product/${id}`);
             toast.success("Product deleted successfully")
@@ -24,24 +32,30 @@ function Products() {
         } catch (error) {
             toast.error("Delete to failed product")
         }
+    }, []);
 
-
-    }
+    // const handleDelete = useCallback((id:any,test:any)=> {
+    //       console.log("id", id)
+    //     try {
+    //         await api.delete(`/product/${id}`);
+    //         toast.success("Product deleted successfully")
+    //         fetchProducts();
+    //     } catch (error) {
+    //         toast.error("Delete to failed product")
+    //     } 
+    // })
     const fetchProducts = async () => {
         const res = await api.get("/product")
         console.log(res)
         setProducts(res.data);
     }
-
     const addProdcut = () => {
         navigate('/productAddEdit')
     }
-
     useEffect(() => {
         fetchProducts();
     }, [])
     return (
-
         <div className='p-6'>
             <div>
                 <Button className='text-right' onClick={addProdcut}>Add Product</Button>
@@ -59,7 +73,6 @@ function Products() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-
                         {products.map((item: any) => {
                             return (<TableRow key={item.id}>
                                 <TableCell className='font-medium'>{item.name}</TableCell>
@@ -67,7 +80,6 @@ function Products() {
                                 <TableCell>₹{item.price}</TableCell>
                                 <TableCell>{item.category}</TableCell>
                                 <TableCell>{item.quantity}</TableCell>
-
                                 {/* Actions */}
                                 <TableCell className="text-right space-x-2">
                                     <Button size="icon" variant="outline" onClick={() => handleEdit(item)}>
